@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -14,143 +16,167 @@ const Index = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Спасибо! Мы свяжемся с вами в ближайшее время.");
+    toast({
+      title: "Заявка отправлена!",
+      description: "Мы свяжемся с вами в ближайшее время.",
+    });
     setFormData({ name: "", phone: "", message: "" });
   };
+
+  const services = [
+    {
+      icon: "Building2",
+      title: "Жилые комплексы",
+      description: "Строительство многоквартирных домов и коттеджных поселков под ключ"
+    },
+    {
+      icon: "Store",
+      title: "Коммерческие здания",
+      description: "Торговые центры, офисные здания, бизнес-центры любой сложности"
+    },
+    {
+      icon: "Factory",
+      title: "Промышленные объекты",
+      description: "Складские комплексы, производственные цеха, логистические центры"
+    },
+    {
+      icon: "Hammer",
+      title: "Реконструкция",
+      description: "Капитальный ремонт и модернизация существующих зданий"
+    },
+    {
+      icon: "Wrench",
+      title: "Монтажные работы",
+      description: "Установка конструкций, инженерных систем, коммуникаций"
+    },
+    {
+      icon: "ClipboardCheck",
+      title: "Проектирование",
+      description: "Разработка проектной документации и дизайн-проектов"
+    }
+  ];
 
   const projects = [
     {
       id: 1,
-      title: "ЖК «Премиум Парк»",
+      title: "ЖК «Солнечный»",
       category: "Жилое строительство",
-      image: "https://cdn.poehali.dev/projects/c5f60bf8-138d-4d1a-be0d-e1648ee9891a/files/e4685379-9e2f-4b05-a010-32bdd5888c1f.jpg",
-      area: "15,000 м²"
+      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop",
+      location: "Москва",
+      description: "Современный жилой комплекс на 450 квартир"
     },
     {
       id: 2,
-      title: "БЦ «Столичный»",
-      category: "Коммерческое строительство",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
-      area: "8,500 м²"
-    },
-    {
-      id: 3,
       title: "ТЦ «Европа»",
-      category: "Торговые комплексы",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
-      area: "12,000 м²"
-    }
-  ];
-
-  const reviews = [
-    {
-      id: 1,
-      name: "Александр Петров",
-      company: "ГК «Развитие»",
-      text: "Работали с МонтажСтрой над крупным жилым комплексом. Профессионализм на высоте, сроки соблюдены, качество отличное.",
-      rating: 5
-    },
-    {
-      id: 2,
-      name: "Елена Соколова",
-      company: "Империя Строй",
-      text: "Команда справилась с нестандартными задачами. Отдельное спасибо за оперативность и внимание к деталям.",
-      rating: 5
+      category: "Коммерческое строительство",
+      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop",
+      location: "Санкт-Петербург",
+      description: "Торговый центр площадью 25 000 м²"
     },
     {
       id: 3,
-      name: "Дмитрий Волков",
-      company: "СтройИнвест",
-      text: "Рекомендую! Надежный партнер, современное оборудование, квалифицированные специалисты.",
-      rating: 5
+      title: "Складской комплекс",
+      category: "Промышленное строительство",
+      image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=600&h=400&fit=crop",
+      location: "Московская область",
+      description: "Логистический центр класса А"
     }
   ];
 
   return (
     <div className="min-h-screen">
       <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
-        <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Icon name="Building2" size={32} className="text-primary" />
-            <span className="text-2xl font-bold text-accent">МонтажСтрой</span>
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Icon name="Construction" className="text-primary" size={32} />
+              <span className="text-2xl font-bold text-accent">МонтажСтрой</span>
+            </div>
+            <nav className="hidden md:flex gap-8">
+              <a href="#services" className="hover:text-primary transition-colors">Услуги</a>
+              <a href="#projects" className="hover:text-primary transition-colors">Проекты</a>
+              <a href="#about" className="hover:text-primary transition-colors">О компании</a>
+              <a href="#contact" className="hover:text-primary transition-colors">Контакты</a>
+            </nav>
+            <Button className="hidden md:flex">
+              <Icon name="Phone" size={18} className="mr-2" />
+              +7 (495) 123-45-67
+            </Button>
           </div>
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#home" className="text-foreground hover:text-primary transition-colors">Главная</a>
-            <a href="#projects" className="text-foreground hover:text-primary transition-colors">Проекты</a>
-            <a href="#about" className="text-foreground hover:text-primary transition-colors">О компании</a>
-            <a href="#reviews" className="text-foreground hover:text-primary transition-colors">Отзывы</a>
-            <a href="#contacts" className="text-foreground hover:text-primary transition-colors">Контакты</a>
-          </div>
-          <Button className="bg-primary hover:bg-primary/90">
-            <Icon name="Phone" size={18} className="mr-2" />
-            +7 (495) 123-45-67
-          </Button>
-        </nav>
+        </div>
       </header>
 
-      <section id="home" className="pt-32 pb-20 bg-gradient-to-br from-primary/5 via-secondary/5 to-background">
+      <section className="pt-32 pb-20 bg-gradient-to-br from-primary/10 to-secondary/10">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                Строим <span className="text-primary">будущее</span> с вами
+            <div className="space-y-6 animate-fade-in">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+                Строим будущее<br />
+                <span className="text-primary">вместе с вами</span>
               </h1>
-              <p className="text-xl text-muted-foreground mb-8">
-                Полный цикл строительных работ от проектирования до сдачи объекта. 
-                Современные технологии, надежность и качество с 2005 года.
+              <p className="text-xl text-muted-foreground">
+                Профессиональное строительство и монтаж любой сложности. 
+                20+ лет опыта, 500+ реализованных проектов.
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8">
-                  Оставить заявку
+              <div className="flex gap-4">
+                <Button size="lg" className="text-lg">
+                  Рассчитать стоимость
                 </Button>
-                <Button size="lg" variant="outline" className="text-lg px-8">
+                <Button size="lg" variant="outline" className="text-lg">
                   Наши проекты
                 </Button>
               </div>
-              <div className="grid grid-cols-3 gap-6 mt-12">
-                <div className="text-center animate-scale-in">
-                  <div className="text-4xl font-bold text-primary mb-2">250+</div>
-                  <div className="text-sm text-muted-foreground">Проектов</div>
-                </div>
-                <div className="text-center animate-scale-in" style={{ animationDelay: '0.1s' }}>
-                  <div className="text-4xl font-bold text-secondary mb-2">18</div>
-                  <div className="text-sm text-muted-foreground">Лет на рынке</div>
-                </div>
-                <div className="text-center animate-scale-in" style={{ animationDelay: '0.2s' }}>
-                  <div className="text-4xl font-bold text-accent mb-2">100%</div>
-                  <div className="text-sm text-muted-foreground">Качество</div>
-                </div>
-              </div>
             </div>
-            <div className="relative animate-fade-in">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary to-secondary rounded-3xl transform rotate-3 opacity-20"></div>
+            <div className="relative animate-scale-in">
               <img 
-                src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80" 
+                src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&h=600&fit=crop" 
                 alt="Строительство"
-                className="relative rounded-3xl shadow-2xl w-full object-cover h-[500px]"
+                className="rounded-2xl shadow-2xl"
               />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 bg-accent text-white">
+      <section className="py-16 bg-accent text-white">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { icon: "Award", title: "Лицензии и сертификаты", text: "Все необходимые разрешения" },
-              { icon: "Shield", title: "Гарантия качества", text: "До 5 лет на все виды работ" },
-              { icon: "Clock", title: "Соблюдение сроков", text: "Четкий график выполнения" },
-              { icon: "Users", title: "Опытная команда", text: "Более 200 специалистов" }
-            ].map((item, index) => (
-              <div key={index} className="text-center animate-slide-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <div className="flex justify-center mb-4">
-                  <div className="bg-primary rounded-full p-4">
-                    <Icon name={item.icon} size={32} />
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-white/80">{item.text}</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="animate-fade-in">
+              <div className="text-4xl font-bold text-primary mb-2">20+</div>
+              <div className="text-lg">лет опыта</div>
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+              <div className="text-4xl font-bold text-primary mb-2">500+</div>
+              <div className="text-lg">проектов</div>
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+              <div className="text-4xl font-bold text-primary mb-2">200+</div>
+              <div className="text-lg">специалистов</div>
+            </div>
+            <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+              <div className="text-4xl font-bold text-primary mb-2">98%</div>
+              <div className="text-lg">довольных клиентов</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="py-20">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-4">Наши услуги</h2>
+          <p className="text-center text-muted-foreground mb-12 text-lg">
+            Полный спектр строительно-монтажных работ
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="p-6 rounded-xl border bg-card hover:shadow-lg transition-all animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <Icon name={service.icon} className="text-primary mb-4" size={40} />
+                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+                <p className="text-muted-foreground">{service.description}</p>
               </div>
             ))}
           </div>
@@ -159,32 +185,33 @@ const Index = () => {
 
       <section id="projects" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Наши проекты</h2>
-            <p className="text-xl text-muted-foreground">Реализованные объекты, которыми мы гордимся</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <h2 className="text-4xl font-bold text-center mb-4">Реализованные проекты</h2>
+          <p className="text-center text-muted-foreground mb-12 text-lg">
+            Наши лучшие работы за последние годы
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
-              <Card key={project.id} className="overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                <div className="relative h-64 overflow-hidden">
-                  <img 
-                    src={project.image} 
+              <div
+                key={project.id}
+                className="group rounded-xl overflow-hidden bg-card shadow-md hover:shadow-xl transition-all animate-scale-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    {project.area}
-                  </div>
                 </div>
-                <CardContent className="p-6">
-                  <div className="text-sm text-secondary font-semibold mb-2">{project.category}</div>
-                  <h3 className="text-2xl font-bold mb-3">{project.title}</h3>
-                  <Button variant="outline" className="w-full">
-                    Подробнее
-                    <Icon name="ArrowRight" size={18} className="ml-2" />
-                  </Button>
-                </CardContent>
-              </Card>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                  <div className="flex items-center text-muted-foreground mb-3">
+                    <Icon name="MapPin" size={16} className="mr-1" />
+                    {project.location}
+                  </div>
+                  <p className="text-muted-foreground">{project.description}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -193,167 +220,137 @@ const Index = () => {
       <section id="about" className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="animate-fade-in">
-              <img 
-                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80" 
+            <div className="animate-slide-in">
+              <img
+                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&h=600&fit=crop"
                 alt="О компании"
-                className="rounded-3xl shadow-2xl w-full h-[500px] object-cover"
+                className="rounded-2xl shadow-xl"
               />
             </div>
-            <div className="animate-fade-in">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">О компании</h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                <strong className="text-foreground">МонтажСтрой</strong> — ведущая строительная компания с 18-летним опытом работы на рынке. 
-                Мы специализируемся на комплексном строительстве жилых, коммерческих и промышленных объектов.
+            <div className="space-y-6 animate-fade-in">
+              <h2 className="text-4xl font-bold">О компании МонтажСтрой</h2>
+              <p className="text-lg text-muted-foreground">
+                Более 20 лет мы создаем надежные и современные объекты по всей России. 
+                Наша команда — это профессионалы с огромным опытом в строительстве и монтаже.
               </p>
-              <p className="text-lg text-muted-foreground mb-8">
-                Наша команда из более чем 200 квалифицированных специалистов использует передовые технологии 
-                и современное оборудование для реализации проектов любой сложности.
-              </p>
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { icon: "Target", text: "Индивидуальный подход" },
-                  { icon: "CheckCircle", text: "Прозрачность работы" },
-                  { icon: "TrendingUp", text: "Конкурентные цены" },
-                  { icon: "HeartHandshake", text: "Долгосрочное партнерство" }
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <Icon name={item.icon} className="text-primary" size={24} />
-                    <span className="font-medium">{item.text}</span>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <Icon name="CheckCircle2" className="text-primary mt-1" size={24} />
+                  <div>
+                    <h4 className="font-semibold mb-1">Современные технологии</h4>
+                    <p className="text-muted-foreground">Используем передовое оборудование и методы строительства</p>
                   </div>
-                ))}
+                </div>
+                <div className="flex items-start gap-3">
+                  <Icon name="CheckCircle2" className="text-primary mt-1" size={24} />
+                  <div>
+                    <h4 className="font-semibold mb-1">Соблюдение сроков</h4>
+                    <p className="text-muted-foreground">Гарантируем выполнение работ точно в срок</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Icon name="CheckCircle2" className="text-primary mt-1" size={24} />
+                  <div>
+                    <h4 className="font-semibold mb-1">Полная гарантия</h4>
+                    <p className="text-muted-foreground">5 лет гарантии на все виды работ</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="reviews" className="py-20 bg-gradient-to-br from-secondary/5 to-primary/5">
+      <section id="contact" className="py-20 bg-gradient-to-br from-primary/10 to-secondary/10">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Отзывы клиентов</h2>
-            <p className="text-xl text-muted-foreground">Нам доверяют ведущие компании</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {reviews.map((review, index) => (
-              <Card key={review.id} className="animate-scale-in hover:shadow-xl transition-shadow" style={{ animationDelay: `${index * 0.1}s` }}>
-                <CardContent className="p-6">
-                  <div className="flex gap-1 mb-4">
-                    {Array.from({ length: review.rating }).map((_, i) => (
-                      <Icon key={i} name="Star" size={20} className="text-primary fill-primary" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-6 italic">"{review.text}"</p>
-                  <div className="border-t pt-4">
-                    <div className="font-semibold text-lg">{review.name}</div>
-                    <div className="text-sm text-muted-foreground">{review.company}</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="contacts" className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="animate-fade-in">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">Свяжитесь с нами</h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Готовы обсудить ваш проект? Оставьте заявку, и наш менеджер свяжется с вами в течение 30 минут.
-              </p>
-              <div className="space-y-6">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl font-bold text-center mb-4">Свяжитесь с нами</h2>
+            <p className="text-center text-muted-foreground mb-12 text-lg">
+              Оставьте заявку и получите бесплатную консультацию
+            </p>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-6 animate-fade-in">
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 rounded-full p-3">
-                    <Icon name="Phone" className="text-primary" size={24} />
-                  </div>
+                  <Icon name="Phone" className="text-primary mt-1" size={24} />
                   <div>
-                    <div className="font-semibold mb-1">Телефон</div>
-                    <div className="text-lg">+7 (495) 123-45-67</div>
+                    <h4 className="font-semibold mb-1">Телефон</h4>
+                    <p className="text-muted-foreground">+7 (495) 123-45-67</p>
+                    <p className="text-muted-foreground">+7 (495) 123-45-68</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="bg-secondary/10 rounded-full p-3">
-                    <Icon name="Mail" className="text-secondary" size={24} />
-                  </div>
+                  <Icon name="Mail" className="text-primary mt-1" size={24} />
                   <div>
-                    <div className="font-semibold mb-1">Email</div>
-                    <div className="text-lg">info@montazhstroy.ru</div>
+                    <h4 className="font-semibold mb-1">Email</h4>
+                    <p className="text-muted-foreground">info@montazhstroy.ru</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="bg-accent/10 rounded-full p-3">
-                    <Icon name="MapPin" className="text-accent" size={24} />
-                  </div>
+                  <Icon name="MapPin" className="text-primary mt-1" size={24} />
                   <div>
-                    <div className="font-semibold mb-1">Адрес</div>
-                    <div className="text-lg">г. Москва, ул. Строителей, д. 15</div>
+                    <h4 className="font-semibold mb-1">Адрес</h4>
+                    <p className="text-muted-foreground">
+                      г. Москва, ул. Строительная, д. 15
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Icon name="Clock" className="text-primary mt-1" size={24} />
+                  <div>
+                    <h4 className="font-semibold mb-1">Время работы</h4>
+                    <p className="text-muted-foreground">Пн-Пт: 9:00 - 18:00</p>
+                    <p className="text-muted-foreground">Сб-Вс: выходной</p>
                   </div>
                 </div>
               </div>
+              <form onSubmit={handleSubmit} className="space-y-4 animate-scale-in">
+                <Input
+                  placeholder="Ваше имя"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                />
+                <Input
+                  placeholder="Телефон"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  required
+                />
+                <Textarea
+                  placeholder="Опишите ваш проект"
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  rows={4}
+                  required
+                />
+                <Button type="submit" size="lg" className="w-full text-lg">
+                  Отправить заявку
+                </Button>
+              </form>
             </div>
-            <Card className="animate-scale-in shadow-2xl">
-              <CardContent className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Ваше имя</label>
-                    <Input 
-                      placeholder="Введите ваше имя"
-                      value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Телефон</label>
-                    <Input 
-                      type="tel"
-                      placeholder="+7 (___) ___-__-__"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Сообщение</label>
-                    <Textarea 
-                      placeholder="Расскажите о вашем проекте"
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      required
-                    />
-                  </div>
-                  <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-lg py-6">
-                    Отправить заявку
-                    <Icon name="Send" size={20} className="ml-2" />
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>
 
       <footer className="bg-accent text-white py-12">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Icon name="Building2" size={28} className="text-primary" />
+                <Icon name="Construction" size={28} />
                 <span className="text-xl font-bold">МонтажСтрой</span>
               </div>
               <p className="text-white/70">
-                Профессиональное строительство с 2005 года
+                Строим будущее вместе с вами уже более 20 лет
               </p>
             </div>
             <div>
               <h4 className="font-semibold mb-4">Услуги</h4>
               <ul className="space-y-2 text-white/70">
-                <li>Жилое строительство</li>
-                <li>Коммерческие объекты</li>
-                <li>Промышленные комплексы</li>
+                <li>Жилые комплексы</li>
+                <li>Коммерческие здания</li>
+                <li>Промышленные объекты</li>
                 <li>Реконструкция</li>
               </ul>
             </div>
@@ -361,27 +358,21 @@ const Index = () => {
               <h4 className="font-semibold mb-4">Компания</h4>
               <ul className="space-y-2 text-white/70">
                 <li>О нас</li>
+                <li>Проекты</li>
                 <li>Вакансии</li>
-                <li>Сертификаты</li>
                 <li>Контакты</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Социальные сети</h4>
-              <div className="flex gap-4">
-                <a href="#" className="bg-white/10 hover:bg-primary transition-colors rounded-full p-2">
-                  <Icon name="Facebook" size={20} />
-                </a>
-                <a href="#" className="bg-white/10 hover:bg-primary transition-colors rounded-full p-2">
-                  <Icon name="Instagram" size={20} />
-                </a>
-                <a href="#" className="bg-white/10 hover:bg-primary transition-colors rounded-full p-2">
-                  <Icon name="Linkedin" size={20} />
-                </a>
-              </div>
+              <h4 className="font-semibold mb-4">Контакты</h4>
+              <ul className="space-y-2 text-white/70">
+                <li>+7 (495) 123-45-67</li>
+                <li>info@montazhstroy.ru</li>
+                <li>г. Москва, ул. Строительная, 15</li>
+              </ul>
             </div>
           </div>
-          <div className="border-t border-white/20 pt-8 text-center text-white/70">
+          <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/60">
             © 2024 МонтажСтрой. Все права защищены.
           </div>
         </div>
